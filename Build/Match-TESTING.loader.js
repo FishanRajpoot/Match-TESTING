@@ -54,7 +54,7 @@ function createUnityInstance(canvas, config, onProgress) {
       preserveDrawingBuffer: false,
       powerPreference: 2,
     },
-    wasmFileSize: 97135922,
+    wasmFileSize: 96557782,
     streamingAssetsUrl: "StreamingAssets",
     downloadProgress: {},
     deinitializers: [],
@@ -688,7 +688,6 @@ Module.fetchWithProgress = function () {
       });
   }
 
-
   function downloadFramework() {
       return new Promise(function (resolve, reject) {
         var script = document.createElement("script");
@@ -753,7 +752,6 @@ Module.fetchWithProgress = function () {
 
   function loadBuild() {
     var codeDownloadTimeStartup = performance.now();
-
     downloadFramework().then(function (unityFramework) {
       Module.webAssemblyTimeStart = performance.now();
       unityFramework(Module);
