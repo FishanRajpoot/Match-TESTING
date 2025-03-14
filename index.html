@@ -4,13 +4,32 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity Web Player | Match 3-Fishan</title>
+    <style>
+      /* Style for loading text */
+      #loading-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        font-family: Arial, sans-serif;
+        color: white;
+      }
+    </style>
   </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=550 height=800 tabindex="-1" style="width: 550px; height: 800px; background: #231F20"></canvas>
+  <body style="text-align: center; padding: 0; border: 0; margin: 0; background: black;">
+    
+    <!-- Loading text -->
+    <div id="loading-text">Loading...</div>
+
+    <!-- Unity Canvas -->
+    <canvas id="unity-canvas" width="550" height="800" tabindex="-1" 
+      style="width: 550px; height: 800px; background: #231F20"></canvas>
+
     <script src="Build/Match-TESTING.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
+        // Mobile styling adjustments
         var meta = document.createElement('meta');
         meta.name = 'viewport';
         meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
@@ -20,10 +39,10 @@
         canvas.style.width = "100%";
         canvas.style.height = "100%";
         canvas.style.position = "fixed";
-
         document.body.style.textAlign = "left";
       }
 
+      // Start Unity and remove loading text
       createUnityInstance(document.querySelector("#unity-canvas"), {
         arguments: [],
         dataUrl: "Build/Match-TESTING.data.gz",
@@ -33,9 +52,12 @@
         companyName: "DefaultCompany",
         productName: "Match 3-Fishan",
         productVersion: "1.6.8",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      }).then(() => {
+        document.getElementById("loading-text").style.display = "none";
+      }).catch((error) => {
+        console.error(error);
       });
+
     </script>
   </body>
 </html>
