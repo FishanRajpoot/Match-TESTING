@@ -15,6 +15,10 @@
         font-family: Arial, sans-serif;
         color: white;
       }
+      /* Hide canvas initially */
+      #unity-canvas {
+        display: none;
+      }
     </style>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0; background: black;">
@@ -26,6 +30,7 @@
     <canvas id="unity-canvas" width="550" height="800" tabindex="-1" 
       style="width: 550px; height: 800px; background: #231F20"></canvas>
 
+    <!-- Load Unity -->
     <script src="Build/Match-TESTING.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -42,7 +47,9 @@
         document.body.style.textAlign = "left";
       }
 
-      // Start Unity and remove loading text
+      // Ensure game loads properly
+      document.getElementById("unity-canvas").style.display = "block"; // Show canvas
+
       createUnityInstance(document.querySelector("#unity-canvas"), {
         arguments: [],
         dataUrl: "Build/Match-TESTING.data.gz",
@@ -53,11 +60,11 @@
         productName: "Match 3-Fishan",
         productVersion: "1.6.8",
       }).then(() => {
-        document.getElementById("loading-text").style.display = "none";
+        document.getElementById("loading-text").style.display = "none"; // Hide loading text when Unity starts
       }).catch((error) => {
-        console.error(error);
+        console.error("Unity failed to load:", error);
+        document.getElementById("loading-text").innerText = "Failed to load the game. Check the console.";
       });
-
     </script>
   </body>
 </html>
